@@ -57,8 +57,8 @@ import openfl.Lib;
 import openfl.display.BlendMode;
 import openfl.display.StageQuality;
 import openfl.events.KeyboardEvent;
-import openfl.filters.ShaderFilter;
-import openfl.filters.ShaderFilter;
+import openfl._filters.ShaderFilter;
+import openfl._filters.ShaderFilter;
 import flash.display.Bitmap;
 import flash.display.BitmapData;
 import openfl.utils.Assets as OpenFlAssets;
@@ -71,6 +71,7 @@ import openfl8.effects.WiggleEffect.WiggleEffectType;
 import ShopState.BeansPopup;
 import HeatwaveShader;
 import ChromaticAbberation;
+import Paths;
 
 using StringTools;
 
@@ -86,6 +87,8 @@ class PlayState extends MusicBeatState
 	#if LUAMPAD_ALLOWED
 	public var luaMobilePad:MobilePad; //trust me, you'll never need to access this directly
 	#end
+
+	public var variables:Map<String, Dynamic> = new Map();
 
 	var noteRows:Array<Array<Array<Note>>> = [[],[]];
 	var votingnoteRows:Array<Array<Array<Note>>> = [[],[]];
@@ -2350,7 +2353,7 @@ class PlayState extends MusicBeatState
 				heatwaveShader = new HeatwaveShader();
 				add(heatwaveShader);
 				var filter:ShaderFilter = new ShaderFilter(heatwaveShader.shader);
-				FlxG.camera.filters =[filter, filter2];
+				FlxG.camera._filters =[filter, filter2];
 
 				//		var sky:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('polus/SkyPolusLol', 'impostor'));
 				//		sky.antialiasing = true;
@@ -3511,7 +3514,7 @@ class PlayState extends MusicBeatState
 				add(caShader);
 				caShader.amount = -0.5;
 				var filter:ShaderFilter = new ShaderFilter(caShader.shader);
-				FlxG.camera.filters = [filter];
+				FlxG.camera._filters = [filter];
 
 				var lightoverlay:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('airship/grayfg', 'impostor'));
 				lightoverlay.antialiasing = true;
@@ -3535,7 +3538,7 @@ class PlayState extends MusicBeatState
 				//overlayShader.setBitmapOverlay(overlayImage);
 
 				//var overlayFilter:ShaderFilter = new ShaderFilter(overlayShader);
-				//FlxG.camera.setFilters([overlayFilter]);
+				//FlxG.camera.set_filters([overlayFilter]);
 
 				var lightoverlay:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('airship/grayoverlay', 'impostor'));
 				lightoverlay.antialiasing = true;

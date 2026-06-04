@@ -23,7 +23,7 @@ import lime.net.curl.CURLCode;
 import flixel.input.mouse.FlxMouseEventManager;
 import ClientPrefs;
 import ChromaticAbberation;
-import openfl.filters.ShaderFilter;
+import openfl._filters.ShaderFilter;
 import flixel.math.FlxPoint;
 import flixel.input.mouse.FlxMouseEvent;
 
@@ -139,7 +139,7 @@ class AmongStoryMenuState extends MusicBeatState
 			add(caShader);
 			caShader.amount = 0;
 			var filter2:ShaderFilter = new ShaderFilter(caShader.shader);
-			camSpace.filters = [filter2];
+			camSpace._filters = [filter2];
 		}
 
 		starsBG = new FlxBackdrop(Paths.image('freeplay/starBG', 'impostor'));
