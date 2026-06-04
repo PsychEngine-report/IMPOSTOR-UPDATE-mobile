@@ -443,7 +443,7 @@ class FunkinLua {
 			cancelTimer(tag);
 		});
 
-		/*Lua_helper.add_callback(lua, "getPropertyAdvanced", function(varsStr:String) {
+		Lua_helper.add_callback(lua, "getPropertyAdvanced", function(varsStr:String) {
 			var variables:Array<String> = varsStr.replace(' ', '').split(',');
 			var leClass:Class<Dynamic> = Type.resolveClass(variables[0]);
 			if(variables.length > 2) {
@@ -473,7 +473,7 @@ class FunkinLua {
 			} else if(variables.length == 2) {
 				return Reflect.setProperty(leClass, variables[variables.length-1], value);
 			}
-		});*/
+		});
 		
 		//stupid bietch ass functions
 		Lua_helper.add_callback(lua, "addScore", function(value:Int = 0) {
