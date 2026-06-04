@@ -573,6 +573,11 @@ class AmongStoryMenuState extends MusicBeatState
 		FlxG.camera.follow(ship, LOCKON, 1);
 
 		changeWeek();
+
+		#if TOUCH_CONTROLS
+        addMobilePad("NONE", "A_B");
+		addMobilePadCamera();
+        #end
 	
 	}
 

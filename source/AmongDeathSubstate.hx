@@ -64,6 +64,11 @@ class AmongDeathSubstate extends MusicBeatSubstate
 
 		changeMissAmount(0);
 		openMissLimit();
+
+		#if TOUCH_CONTROLS
+        addMobilePad("NONE", "A_B");
+		addMobilePadCamera();
+        #end
 	}
 
 	public var canControl:Bool = false;

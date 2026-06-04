@@ -147,22 +147,29 @@ class FunkinLua {
 		set('lowQuality', ClientPrefs.lowQuality);
 
 		//stuff 4 noobz like you B)
-		Lua_helper.add_callback(lua, "getProperty", function(variable:String) {
+		Lua_helper.add_callback(lua, "getPropertyFromClass", function(classVar:String, variable:String) {
+			@:privateAccess
+			#if TOUCH_CONTROLS
+			var myClass:Dynamic = classCheck(classVar);
+			var variableplus:String = varCheck(myClass, variable);
+			#end
 			var killMe:Array<String> = variable.split('.');
-			if(killMe.length > 1) {
-				var coverMeInPiss:Dynamic = null;
-				if(lePlayState.modchartSprites.exists(killMe[0])) {
-					coverMeInPiss = lePlayState.modchartSprites.get(killMe[0]);
-				} else {
-					coverMeInPiss = Reflect.getProperty(lePlayState, killMe[0]);
-				}
-
-				for (i in 1...killMe.length-1) {
-					coverMeInPiss = Reflect.getProperty(coverMeInPiss, killMe[i]);
-				}
-				return Reflect.getProperty(coverMeInPiss, killMe[killMe.length-1]);
+			#if TOUCH_CONTROLS
+			if (MusicBeatState.mobilec != null && myClass == 'flixel.FlxG' && variableplus.indexOf('key') != -1){
+				var check:Dynamic;
+				check = specialKeyCheck(variableplus); //fuck you old lua 🙃
+				if (check != null) return check;
 			}
-			return Reflect.getProperty(lePlayState, variable);
+			#end
+		   
+			if(killMe.length > 1) {
+				var coverMeInPiss:Dynamic = getVarInArray(Type.resolveClass(classVar), killMe[0]);
+				for (i in 1...killMe.length-1) {
+					coverMeInPiss = getVarInArray(coverMeInPiss, killMe[i]);
+				}
+				return getVarInArray(coverMeInPiss, killMe[killMe.length-1]);
+			}
+			return getVarInArray(Type.resolveClass(classVar), variable);
 		});
 		Lua_helper.add_callback(lua, "setProperty", function(variable:String, value:Dynamic) {
 			var killMe:Array<String> = variable.split('.');

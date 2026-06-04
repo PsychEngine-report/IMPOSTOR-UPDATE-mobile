@@ -1,5 +1,6 @@
 package;
 
+
 import openfl.system.System;
 import openfl.utils.AssetCache;
 import cpp.vm.Gc;
@@ -37,6 +38,13 @@ class Main extends Sprite
 	public function new()
 	{
 		super();
+		#if mobile
+		#if android
+		StorageUtil.requestPermissions();
+		#end
+		Sys.setCwd(StorageUtil.getStorageDirectory());
+		#end
+		CrashHandler.init();
 
 		if (stage != null)
 		{
@@ -84,7 +92,7 @@ class Main extends Sprite
 		#end
 
 		// Paths.getModFolders();
-		addChild(new FlxGame(gameWidth, gameHeight, initialState, framerate, framerate, skipSplash, startFullscreen));
+		addChild(new FlxGame(game.width, game.height, #if mobile CopyState.checkExistingFiles() ? game.initialState : CopyState #else game.initialState #end, #if (flixel < "5.0.0") game.zoom, #end game.framerate, game.framerate, game.skipSplash, game.startFullscreen));
 		FlxGraphic.defaultPersist = false;
 
 		FlxG.signals.gameResized.add(onResizeGame);
@@ -107,7 +115,6 @@ class Main extends Sprite
 		// 	trace(System.totalMemory);
 		// });
 		
-		#if !mobile
 		fpsCounter = new FPS(10, 5, 0xFFFFFF);
 		addChild(fpsCounter);
 
@@ -115,7 +122,6 @@ class Main extends Sprite
 		if(fpsCounter != null) { 
 			fpsCounter.visible = ClientPrefs.showFPS;
 		}
-		#end
 
 		trace(FlxG.save.path)
 		;
@@ -125,6 +131,19 @@ class Main extends Sprite
 		#if html5
 		FlxG.autoPause = false;
 		FlxG.mouse.visible = false;
+		#end
+
+		FlxG.game.focusLostFramerate = #if mobile 30 #else 60 #end;
+		#if web
+		FlxG.keys.preventDefaultKeys.push(TAB);
+		#else
+		FlxG.keys.preventDefaultKeys = [TAB];
+		#end
+
+		#if android FlxG.android.preventDefaultKeys = [BACK]; #end
+
+		#if mobile
+		FlxG.scaleMode = new MobileScaleMode();
 		#end
 	}
 

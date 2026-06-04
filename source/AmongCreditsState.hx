@@ -153,6 +153,11 @@ class AmongCreditsState extends MusicBeatState
         add(baritone);
         
         updateDescription();
+
+        #if TOUCH_CONTROLS
+        addMobilePad("FULL", "A_B");
+		addMobilePadCamera();
+        #end
     }
 
     override public function update(elapsed:Float):Void

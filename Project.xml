@@ -40,13 +40,21 @@
 
 	<classpath name="source" />
 
+	<section if="TOUCH_CONTROLS">
+		<assets path="mobile"         rename="assets/mobile"        exclude="*.ogg" if="web"/>
+		<assets path="mobile"         rename="assets/mobile"        exclude="*.mp3" unless="web"/>
+	</section>
+
 	<assets path="assets/preload" rename="assets" exclude="*.ogg" if="web"/>
 	<assets path="assets/preload" rename="assets" exclude="*.mp3"  unless="web"/>
 	
 	<!-- PSYCH ENGINE CUSTOMIZATION -->
 	<define name="MODS_ALLOWED" if="desktop" />
 	<define name="LUA_ALLOWED" if="windows" />
-	<define name="VIDEOS_ALLOWED" if="web || windows" unless="32"/>
+	<define name="TOUCH_CONTROLS" if="mobile" />
+	<define name="LUAMPAD_ALLOWED" if="TOUCH_CONTROLS" />
+	<define name="CRASH_HANDLER" if="desktop || mobile" />
+	<define name="VIDEOS_ALLOWED" if="web || windows || mobile" unless="32"/>
 
 	<!-- <define name="PRELOAD_ALL" /> -->
 	<define name="PRELOAD_ALL" unless="web" />
@@ -139,6 +147,11 @@
 
 	<!--Enable this for Nape release builds for a serious peformance improvement-->
 	<haxedef name="NAPE_RELEASE_BUILD" unless="debug" />
+
+	<!--  Allow Write Access to EXTERNAL_DATA Directory  -->
+	<haxedef name="SHARE_MOBILE_FILES" if="mobile"/>
+	<!--  Do whatever you want I'm tired uninstall and install everytime  -->
+	<certificate path="key.keystore" password="psychengine" alias="psychport" alias-password="psychengine" if="android" unless="debug"/>
 
 	<!-- _________________________________ Custom _______________________________ -->
 

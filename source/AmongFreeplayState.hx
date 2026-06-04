@@ -322,6 +322,10 @@ class AmongFreeplayState extends MusicBeatState
 		changeSelection(0);
 		changePortrait();
 		
+		#if TOUCH_CONTROLS
+        addMobilePad("FULL", "A_B");
+		addMobilePadCamera();
+        #end
 		
 	}
 
