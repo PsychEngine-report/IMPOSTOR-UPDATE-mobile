@@ -83,6 +83,10 @@ import sys.FileSystem;
 
 class PlayState extends MusicBeatState
 {
+	#if LUAMPAD_ALLOWED
+	public var luaMobilePad:MobilePad; //trust me, you'll never need to access this directly
+	#end
+	
 	var noteRows:Array<Array<Array<Note>>> = [[],[]];
 	var votingnoteRows:Array<Array<Array<Note>>> = [[],[]];
 	private var singAnimations:Array<String> = ['singLEFT', 'singDOWN', 'singUP', 'singRIGHT'];
@@ -631,7 +635,7 @@ class PlayState extends MusicBeatState
 		#if TOUCH_CONTROLS
 		MobileData.init();
 		#end
-		
+
 		Paths.clearStoredMemory();
 
 		instance = this;

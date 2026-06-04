@@ -28,6 +28,7 @@ class ClientPrefs {
     public static var extraKeyReturn2:String = 'SPACE';
     public static var extraKeyReturn3:String = 'Q';
     public static var extraKeyReturn4:String = 'E';
+	public static var wideScreen:Bool = false;
 	public static var middleScroll:Bool = false;
 	public static var showFPS:Bool = true;
 	public static var flashing:Bool = true;
@@ -118,6 +119,7 @@ class ClientPrefs {
         FlxG.save.data.extraKeyReturn2 = extraKeyReturn2;
         FlxG.save.data.extraKeyReturn3 = extraKeyReturn3;
         FlxG.save.data.extraKeyReturn4 = extraKeyReturn4;
+		FlxG.save.data.wideScreen = wideScreen;
 		FlxG.save.data.middleScroll = middleScroll;
 		FlxG.save.data.showFPS = showFPS;
 		FlxG.save.data.flashing = flashing;
@@ -195,6 +197,8 @@ class ClientPrefs {
         	extraKeyReturn3 = FlxG.save.data.extraKeyReturn3;
         if(FlxG.save.data.extraKeyReturn4 != null)
         	extraKeyReturn4 = FlxG.save.data.extraKeyReturn4;
+		if(FlxG.save.data.wideScreen != null)
+			wideScreen = FlxG.save.data.wideScreen;
 		if(FlxG.save.data.middleScroll != null) {
 			middleScroll = FlxG.save.data.middleScroll;
 		}
