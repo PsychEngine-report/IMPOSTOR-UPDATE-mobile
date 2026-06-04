@@ -13,7 +13,10 @@ import flixel.FlxSprite;
 import flixel.util.FlxColor;
 import flixel.util.FlxGradient;
 import flixel.FlxState;
+import flixel.FlxCamera;
 import flixel.FlxBasic;
+import flixel.input.actions.FlxActionInput;
+import flixel.util.FlxDestroyUtil;
 
 class MusicBeatState extends FlxUIState
 {

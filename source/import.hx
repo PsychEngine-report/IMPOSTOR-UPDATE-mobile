@@ -20,6 +20,13 @@ import mobile.options.*;
 import mobile.backend.MobileScaleMode;
 #end
 
+#if sys
+import sys.*;
+import sys.io.*;
+#elseif js
+import js.html.*;
+#end
+
 // Android
 #if android
 import android.Tools as AndroidTools;
@@ -49,3 +56,5 @@ import flixel.group.FlxSpriteGroup;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.graphics.frames.FlxAtlasFrames;
 #end
+
+using StringTools;
