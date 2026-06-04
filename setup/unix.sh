@@ -9,7 +9,7 @@ echo Installing dependencies...
 echo This might take a few moments depending on your internet speed.
 haxelib git linc_luajit https://github.com/kittycathy233/linc_luajit --quiet
 haxelib install tjson --quiet
-haxelib install flixel 5.2.2 --quiet
+haxelib git flixel https://github.com/PsychExtendedThings/flixel 5.5.0 --quiet
 haxelib install flixel-addons 2.11.0 --quiet
 haxelib install flixel-ui 2.4.0 --quiet
 haxelib install hscript 2.4.0 --quiet
