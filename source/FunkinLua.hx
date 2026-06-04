@@ -1128,8 +1128,44 @@ class FunkinLua {
 			FlxG.sound.music.fadeOut(duration, toValue);
 			luaTrace('musicFadeOut is deprecated! Use soundFadeOut instead.', false, true);
 		});
+		#if android AndroidFunctions.implement(this); #end
+		#if mobile MobileFunctions.implement(this); #end
+		
 		call('onCreate', []);
 		#end
+	}
+
+	public static function getVarInArray(instance:Dynamic, variable:String):Any
+	{
+		var shit:Array<String> = variable.split('[');
+		if(shit.length > 1)
+		{
+			var blah:Dynamic = null;
+			if(PlayState.instance.variables.exists(shit[0]))
+			{
+				var retVal:Dynamic = PlayState.instance.variables.get(shit[0]);
+				if(retVal != null)
+					blah = retVal;
+			}
+			else
+				blah = Reflect.getProperty(instance, shit[0]);
+
+			for (i in 1...shit.length)
+			{
+				var leNum:Dynamic = shit[i].substr(0, shit[i].length - 1);
+				blah = blah[leNum];
+			}
+			return blah;
+		}
+
+		if(PlayState.instance.variables.exists(variable))
+		{
+			var retVal:Dynamic = PlayState.instance.variables.get(variable);
+			if(retVal != null)
+				return retVal;
+		}
+
+		return Reflect.getProperty(instance, variable);
 	}
 
 	function resetSpriteTag(tag:String) {
@@ -1344,6 +1380,101 @@ class FunkinLua {
 		lua = null;
 		#end
 	}
+
+	#if TOUCH_CONTROLS
+	public static function varCheck(className:Dynamic, variable:String):String{
+		return variable;
+	}
+
+	public static function classCheck(className:String):Dynamic
+	{
+		return Type.resolveClass(className);
+	}
+
+	public static function specialKeyCheck(keyName:String):Dynamic
+	{
+		var textfix:Array<String> = keyName.trim().split('.');
+		var type:String = textfix[1].trim();
+		var key:String = textfix[2].trim();
+		var extraControl:Dynamic = null;
+
+		//Custom return thing
+		for (num in 1...31) {
+			if (MusicBeatState.mobilec.newhbox != null) {
+				//trace("Current Mode: Hitbox");
+				var hitbox:Dynamic = Reflect.getProperty(MusicBeatState.mobilec.newhbox, 'buttonExtra' + num);
+				if (key == Reflect.field(hitbox, 'returnedButton')) {
+					//trace('button ${num} returned to ' + Reflect.field(hitbox, 'returnedButton'));
+					if (Reflect.getProperty(hitbox, type)) {
+						return true;
+					}
+				}
+			}
+		}
+
+		for (num in 1...5){
+			if (ClientPrefs.extraKeys >= num && key == Reflect.field(ClientPrefs, 'extraKeyReturn' + num)){
+				if (MusicBeatState.mobilec.newhbox != null) {
+					extraControl = Reflect.getProperty(MusicBeatState.mobilec.newhbox, 'buttonExtra' + num);
+				}
+				else if (MusicBeatState.mobilec.hbox != null)
+					extraControl = Reflect.getProperty(MusicBeatState.mobilec.hbox, 'buttonExtra' + num);
+				else
+					extraControl = Reflect.getProperty(MusicBeatState.mobilec.vpad, 'buttonExtra' + num);
+				if (Reflect.getProperty(extraControl, type))
+					return true;
+			}
+		}
+		return null;
+	}
+
+	//Used for other extra buttons
+	public static function specialKeyCheckForOthers(key:String, type:String):Dynamic
+	{
+		//Custom return thing
+		for (num in 1...31) {
+			if (MusicBeatState.mobilec.newhbox != null) {
+				//trace("Current Mode: Hitbox");
+				var hitbox:Dynamic = Reflect.getProperty(MusicBeatState.mobilec.newhbox, 'buttonExtra' + num);
+				if (key.toUpperCase() == Reflect.field(hitbox, 'returnedButton')) {
+					//trace('button ${num} returned to ' + Reflect.field(hitbox, 'returnedButton'));
+					if (Reflect.getProperty(hitbox, type)) {
+						return true;
+					}
+				}
+			}
+		}
+
+		if (MusicBeatState.mobilec.newhbox != null){
+			var extraControl = MusicBeatState.mobilec.current;
+			var Extra1:Bool = (MusicBeatState.mobilec.newhbox.buttonExtra1.returnedButton == null);
+			var Extra2:Bool = (MusicBeatState.mobilec.newhbox.buttonExtra2.returnedButton == null);
+			var Extra3:Bool = (MusicBeatState.mobilec.newhbox.buttonExtra3.returnedButton == null);
+			var Extra4:Bool = (MusicBeatState.mobilec.newhbox.buttonExtra4.returnedButton == null);
+			key = key.toUpperCase();
+
+			if (key == ClientPrefs.extraKeyReturn1.toUpperCase() && extraControl.buttonExtra1 != null && Reflect.getProperty(extraControl.buttonExtra1, type) && Extra1)
+				return true;
+			if (key == ClientPrefs.extraKeyReturn2.toUpperCase() && extraControl.buttonExtra2 != null && Reflect.getProperty(extraControl.buttonExtra2, type) && Extra2)
+				return true;
+			if (key == ClientPrefs.extraKeyReturn3.toUpperCase() && extraControl.buttonExtra3 != null && Reflect.getProperty(extraControl.buttonExtra3, type) && Extra3)
+				return true;
+			if (key == ClientPrefs.extraKeyReturn4.toUpperCase() && extraControl.buttonExtra4 != null && Reflect.getProperty(extraControl.buttonExtra4, type) && Extra4)
+				return true;
+		} else {
+			var extraControl = MusicBeatState.mobilec.current;
+			if (key == ClientPrefs.extraKeyReturn1.toUpperCase() && extraControl.buttonExtra1 != null && Reflect.getProperty(extraControl.buttonExtra1, type))
+				return true;
+			if (key == ClientPrefs.extraKeyReturn2.toUpperCase() && extraControl.buttonExtra2 != null && Reflect.getProperty(extraControl.buttonExtra2, type))
+				return true;
+			if (key == ClientPrefs.extraKeyReturn3.toUpperCase() && extraControl.buttonExtra3 != null && Reflect.getProperty(extraControl.buttonExtra3, type))
+				return true;
+			if (key == ClientPrefs.extraKeyReturn4.toUpperCase() && extraControl.buttonExtra4 != null && Reflect.getProperty(extraControl.buttonExtra4, type))
+				return true;
+		}
+		return null;
+	}
+	#end
 }
 
 class ModchartSprite extends FlxSprite
