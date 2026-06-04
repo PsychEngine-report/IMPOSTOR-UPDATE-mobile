@@ -22,7 +22,7 @@
 
 package mobile.states;
 
-import states.TitleState;
+import TitleState;
 import lime.utils.Assets as LimeAssets;
 import openfl.utils.Assets as OpenFLAssets;
 import flixel.addons.util.FlxAsyncLoop;

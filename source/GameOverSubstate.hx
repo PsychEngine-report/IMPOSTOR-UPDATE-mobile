@@ -31,6 +31,15 @@ class GameOverSubstate extends MusicBeatSubstate
 	public static var loopSoundName:String = 'gameover_v4_LOOP';
 	public static var endSoundName:String = 'gameover_v4_End';
 
+	public static var instance:GameOverSubstate;
+
+	override function create()
+	{
+		instance = this;
+
+		super.create();
+	}
+
 	public static function resetVariables() {
 		characterName = 'genericdeath';
 		deathSoundName = 'fnf_loss_sfx';

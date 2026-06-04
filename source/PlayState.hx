@@ -86,7 +86,7 @@ class PlayState extends MusicBeatState
 	#if LUAMPAD_ALLOWED
 	public var luaMobilePad:MobilePad; //trust me, you'll never need to access this directly
 	#end
-	
+
 	var noteRows:Array<Array<Array<Note>>> = [[],[]];
 	var votingnoteRows:Array<Array<Array<Note>>> = [[],[]];
 	private var singAnimations:Array<String> = ['singLEFT', 'singDOWN', 'singUP', 'singRIGHT'];
@@ -117,6 +117,7 @@ class PlayState extends MusicBeatState
 	var chromFreq:Int = 1;
 	var chromTween:FlxTween;
 	var glitchTween:FlxTween;
+	public var luaVpadCam:FlxCamera;
 
 	public static var ratingStuff:Array<Dynamic> = [
 		['You Suck!', 0.2], // From 0% to 19%
@@ -649,12 +650,15 @@ class PlayState extends MusicBeatState
 		camGame = new FlxCamera();
 		camHUD = new FlxCamera();
 		camOther = new FlxCamera();
+		luaVpadCam = new FlxCamera();
 		camHUD.bgColor = 0x0;
 		camOther.bgColor = 0x0;
+		luaVpadCam.bgColor = 0x0;
 
 		FlxG.cameras.reset(camGame);
 		FlxG.cameras.add(camHUD,false);
 		FlxG.cameras.add(camOther,false);
+		FlxG.cameras.add(luaVpadCam,false);
 		grpNoteSplashes = new FlxTypedGroup<NoteSplash>();
 		FlxG.cameras.setDefaultDrawTarget(camGame,true);
 
