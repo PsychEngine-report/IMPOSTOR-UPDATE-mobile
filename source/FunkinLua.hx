@@ -28,6 +28,10 @@ import Type.ValueType;
 import Controls;
 import DialogueBoxPsych;
 
+#if mobile
+import mobile.psychlua.Functions;
+#end
+
 using StringTools;
 
 class FunkinLua {
