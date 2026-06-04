@@ -1,5 +1,12 @@
 package mobile.psychlua;
 
+#if LUA_ALLOWED
+import llua.Lua;
+import llua.LuaL;
+import llua.State;
+import llua.Convert;
+#end
+
 import lime.ui.Haptic;
 import flixel.util.FlxSave;
 import mobile.backend.TouchFunctions;
