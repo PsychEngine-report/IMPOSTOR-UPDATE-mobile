@@ -88,6 +88,8 @@ class PlayState extends MusicBeatState
 	public var luaMobilePad:MobilePad; //trust me, you'll never need to access this directly
 	#end
 
+	public static var instance:PlayState;
+
 	public var variables:Map<String, Dynamic> = new Map();
 	public var modchartTexts:Map<String, ModchartText> = new Map<String, ModchartText>();
 
