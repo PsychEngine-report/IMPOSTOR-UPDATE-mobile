@@ -6,6 +6,8 @@ import mobile.backend.TouchFunctions;
 import mobile.objects.MobileControls.ControlsGroup;
 import mobile.objects.MobileControls.Config;
 import FunkinLua.CustomSubstate;
+import FunkinLua;
+import PlayState;
 #if android
 import android.widget.Toast as AndroidToast;
 #end

@@ -45,6 +45,13 @@ class FunkinLua {
 	var lePlayState:PlayState = null;
 	var scriptName:String = '';
 	var gonnaClose:Bool = false;
+	#if TOUCH_CONTROLS
+	public var extra1:String = ClientPrefs.extraKeyReturn1.toUpperCase();
+	public var extra2:String = ClientPrefs.extraKeyReturn2.toUpperCase();
+	public var extra3:String = ClientPrefs.extraKeyReturn3.toUpperCase();
+	public var extra4:String = ClientPrefs.extraKeyReturn4.toUpperCase();
+	#end
+
 
 	public var accessedProps:Map<String, Dynamic> = null;
 	public function new(script:String) {
@@ -1479,6 +1486,59 @@ class FunkinLua {
 		return null;
 	}
 	#end
+}
+
+class CustomSubstate extends MusicBeatSubstate
+{
+	public static var name:String = 'unnamed';
+	public static var instance:CustomSubstate;
+
+	override function create()
+	{
+		instance = this;
+
+		PlayState.instance.callOnLuas('onCustomSubstateCreate', [name]);
+		super.create();
+		PlayState.instance.callOnLuas('onCustomSubstateCreatePost', [name]);
+	}
+
+	public function new(name:String)
+	{
+		CustomSubstate.name = name;
+		super();
+		cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]];
+	}
+
+	override function update(elapsed:Float)
+	{
+		PlayState.instance.callOnLuas('onCustomSubstateUpdate', [name, elapsed]);
+		super.update(elapsed);
+		PlayState.instance.callOnLuas('onCustomSubstateUpdatePost', [name, elapsed]);
+	}
+
+	override function destroy()
+	{
+		PlayState.instance.callOnLuas('onCustomSubstateDestroy', [name]);
+		super.destroy();
+	}
+
+	public static function insertLuaMpad(?pos:Int = -1)
+	{
+		#if LUAMPAD_ALLOWED
+		if(instance != null)
+		{
+			var tagObject:FlxObject = PlayState.instance.luaMobilePad;
+
+			if(tagObject != null)
+			{
+				if(pos < 0) instance.add(tagObject);
+				else instance.insert(pos, tagObject);
+				return true;
+			}
+		}
+		#end
+		return false;
+	}
 }
 
 class ModchartSprite extends FlxSprite
