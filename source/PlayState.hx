@@ -2353,7 +2353,7 @@ class PlayState extends MusicBeatState
 				heatwaveShader = new HeatwaveShader();
 				add(heatwaveShader);
 				var filter:ShaderFilter = new ShaderFilter(heatwaveShader.shader);
-				FlxG.camera._filters =[filter, filter2];
+				@:privateAccess FlxG.camera._filters =[filter, filter2];
 
 				//		var sky:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('polus/SkyPolusLol', 'impostor'));
 				//		sky.antialiasing = true;
@@ -3514,7 +3514,7 @@ class PlayState extends MusicBeatState
 				add(caShader);
 				caShader.amount = -0.5;
 				var filter:ShaderFilter = new ShaderFilter(caShader.shader);
-				FlxG.camera._filters = [filter];
+				@:privateAccess FlxG.camera._filters = [filter];
 
 				var lightoverlay:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('airship/grayfg', 'impostor'));
 				lightoverlay.antialiasing = true;
@@ -5320,27 +5320,27 @@ class PlayState extends MusicBeatState
 		var daBeats:Int = 0; // Not exactly representative of 'daBeats' lol, just how much it has looped
 
 		var songName:String = Paths.formatToSongPath(SONG.song);
-		var file:String = Paths.json(songName + '/events');
-		#if sys
-		if (FileSystem.exists(Paths.modsJson(songName + '/events')) || FileSystem.exists(file))
-		{
-		#else
-		if (OpenFlAssets.exists(file))
-		{
-		#end
-			var eventsData:Array<SwagSection> = Song.loadFromJson('events', songName).notes;
-			for (section in eventsData)
-			{
-				for (songNotes in section.sectionNotes)
-				{
-					if (songNotes[1] < 0)
-					{
-						eventNotes.push([songNotes[0], songNotes[1], songNotes[2], songNotes[3], songNotes[4]]);
-						eventPushed(songNotes);
-					}
-				}
-			}
-		}
+        var file:String = Paths.json(songName + '/events');
+        #if sys
+        if (FileSystem.exists(Paths.modFolders('data/' + songName + '/events.json')) || FileSystem.exists(file))
+        {
+        #else
+        if (OpenFlAssets.exists(file))
+        {
+        #end
+            var eventsData:Array<SwagSection> = Song.loadFromJson('events', songName).notes;
+            for (section in eventsData)
+            {
+                for (songNotes in section.sectionNotes)
+                {
+                    if (songNotes[1] < 0)
+                    {
+                        eventNotes.push([songNotes[0], songNotes[1], songNotes[2], songNotes[3], songNotes[4]]);
+                        eventPushed(songNotes);
+                    }
+                }
+            }
+        }
 
 		for (section in noteData)
 		{

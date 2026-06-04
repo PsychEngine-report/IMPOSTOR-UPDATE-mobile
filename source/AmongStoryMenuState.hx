@@ -139,7 +139,7 @@ class AmongStoryMenuState extends MusicBeatState
 			add(caShader);
 			caShader.amount = 0;
 			var filter2:ShaderFilter = new ShaderFilter(caShader.shader);
-			camSpace._filters = [filter2];
+			@:privateAccess camSpace._filters = [filter2];
 		}
 
 		starsBG = new FlxBackdrop(Paths.image('freeplay/starBG', 'impostor'));
