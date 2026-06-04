@@ -89,6 +89,7 @@ class PlayState extends MusicBeatState
 	#end
 
 	public var variables:Map<String, Dynamic> = new Map();
+	public var modchartTexts:Map<String, ModchartText> = new Map<String, ModchartText>();
 
 	var noteRows:Array<Array<Array<Note>>> = [[],[]];
 	var votingnoteRows:Array<Array<Array<Note>>> = [[],[]];
