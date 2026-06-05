@@ -1372,7 +1372,7 @@ class PlayState extends MusicBeatState
 				add(space);
 				space.visible = false;
 
-				starsBG = new FlxBackdrop(Paths.image('freeplay/starBG', 'impostor'),XY,1,1);
+				starsBG = new FlxBackdrop(Paths.image('freeplay/starBG', 'impostor'),FlxAxes.XY,1,1);
 				starsBG.setPosition(111.3, 67.95);
 				starsBG.antialiasing = true;
 				starsBG.updateHitbox();
@@ -1380,7 +1380,7 @@ class PlayState extends MusicBeatState
 				add(starsBG);
 				starsBG.visible = false;
 
-				starsFG = new FlxBackdrop(Paths.image('freeplay/starFG', 'impostor'),XY,5,5);
+				starsFG = new FlxBackdrop(Paths.image('freeplay/starFG', 'impostor'),FlxAxes.XY,5,5);
 				starsFG.setPosition(54.3, 59.45);
 				starsFG.updateHitbox();
 				starsFG.antialiasing = true;
@@ -3326,7 +3326,7 @@ class PlayState extends MusicBeatState
 				add(torlight);
 
 				startDark = new FlxSprite().makeGraphic(2000, 2000, 0xFF000000);
-				startDark.screenCenter(XY);
+				startDark.screenCenter(FlxAxes.XY);
 				startDark.scrollFactor.set(0, 0);
 				add(startDark);
 
@@ -3334,7 +3334,7 @@ class PlayState extends MusicBeatState
 				ziffyStart.frames = Paths.getSparrowAtlas('torture_startZiffy');
 				ziffyStart.animation.addByPrefix('idle', 'Opening', 24, false);
 				ziffyStart.visible = false;
-				ziffyStart.screenCenter(XY);
+				ziffyStart.screenCenter(FlxAxes.XY);
 				ziffyStart.scrollFactor.set(0, 0);
 				add(ziffyStart);
 
@@ -10276,7 +10276,7 @@ class PlayState extends MusicBeatState
 				if(curBeat == 2){
 					ziffyStart.visible = true;
 					ziffyStart.animation.play("idle", true);
-					ziffyStart.screenCenter(XY);
+					ziffyStart.screenCenter(FlxAxes.XY);
 					ziffyStart.y -= 120;
 				}
 

@@ -213,14 +213,14 @@ class ShopState extends MusicBeatState
         FlxG.camera.follow(camFollowPos, null, 2);
         //camStars.follow(camFollowPos, null, 2);
 
-        starsBG = new FlxBackdrop(Paths.image('shop/starBG', 'impostor'), XY, 0, 0);
+        starsBG = new FlxBackdrop(Paths.image('shop/starBG', 'impostor'), FlxAxes.XY, 0, 0);
         starsBG.antialiasing = true;
         starsBG.updateHitbox();
         //starsBG.cameras = [camStars];
         starsBG.scrollFactor.set(0.3, 0.3);
         add(starsBG);
         
-        starsFG = new FlxBackdrop(Paths.image('shop/starFG', 'impostor'), XY, 0, 0);
+        starsFG = new FlxBackdrop(Paths.image('shop/starFG', 'impostor'), FlxAxes.XY, 0, 0);
         starsFG.updateHitbox();
         starsFG.antialiasing = true;
         //starsFG.cameras = [camStars];
