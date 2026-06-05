@@ -97,8 +97,6 @@ class PlayState extends MusicBeatState
 	var votingnoteRows:Array<Array<Array<Note>>> = [[],[]];
 	private var singAnimations:Array<String> = ['singLEFT', 'singDOWN', 'singUP', 'singRIGHT'];
 
-	public static var instance:PlayState;
-
 	public static var STRUM_X = 42;
 	public static var STRUM_X_MIDDLESCROLL = -278;
 
