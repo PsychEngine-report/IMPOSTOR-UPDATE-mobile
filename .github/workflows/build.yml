@@ -53,10 +53,26 @@ jobs:
           haxe-version: ${{ env.HAXE_VERSION }}
 
       - name: Setup Haxe
+        if: inputs.system == 'MacOS'
+        uses: krdlab/setup-haxe@master
+        with:
+          haxe-version: ${{ env.HAXE_VERSION }}
+
+      - name: Setup Haxe
+        if: inputs.system == 'Linux'
+        uses: krdlab/setup-haxe@master
+        with:
+          haxe-version: ${{ env.HAXE_VERSION }}
+
+      - name: Setup Haxe
         if: inputs.system == 'iOS'
         uses: krdlab/setup-haxe@master
         with:
           haxe-version: ${{ env.HAXE_VERSION }}
+
+      - name: Install libVLC
+        if: startsWith(inputs.name, 'Linux')
+        run: sudo apt install libvlc-dev libvlccore-dev
 
       - name: Restore cache for android builds
         if: endsWith(inputs.doCache, 'YES')
