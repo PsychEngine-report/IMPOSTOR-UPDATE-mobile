@@ -48,7 +48,7 @@ class AmongDifficultySubstate extends MusicBeatSubstate
 		changeDiff(0);
 		
 		blackBG = new FlxSprite().makeGraphic(1400, 1400, 0xFF000000);
-		blackBG.screenCenter(FlxAxes.XY);
+		blackBG.screenCenter(XY);
 		blackBG.alpha = 0;
 		add(blackBG);
 

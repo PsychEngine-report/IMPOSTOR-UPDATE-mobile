@@ -168,13 +168,13 @@ class TitleState extends MusicBeatState
 		// bg.updateHitbox();
 		add(bg);
 
-		starFG = new FlxBackdrop(Paths.image('menuBooba/starFG', 'impostor'), FlxAxes.XY, 1, 1);
+		starFG = new FlxBackdrop(Paths.image('menuBooba/starFG', 'impostor'), XY, 1, 1);
 		starFG.updateHitbox();
 		starFG.antialiasing = true;
 		starFG.scrollFactor.set();
 		add(starFG);
 
-		starBG = new FlxBackdrop(Paths.image('menuBooba/starBG', 'impostor'), FlxAxes.XY, 1, 1);
+		starBG = new FlxBackdrop(Paths.image('menuBooba/starBG', 'impostor'), XY, 1, 1);
 		starBG.updateHitbox();
 		starBG.antialiasing = true;
 		starBG.scrollFactor.set();
