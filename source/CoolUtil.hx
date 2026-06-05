@@ -176,16 +176,18 @@ class CoolUtil
 			+ FlxSave.validate(FlxG.stage.application.meta.get('file')) #end;
 	}
 
-	#if cpp
-    @:functionCode('
-        return std::thread::hardware_concurrency();
-    ')
-	#end
+	
 
 	public static function showPopUp(message:String, title:String):Void
 	{
 		FlxG.stage.window.alert(message, title);
 	}
+
+	#if cpp
+    @:functionCode('
+        return std::thread::hardware_concurrency();
+    ')
+	#end
 	
 	public static function getCPUThreadsCount():Int
     {
