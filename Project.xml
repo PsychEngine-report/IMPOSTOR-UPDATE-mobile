@@ -88,6 +88,19 @@
         <assets path="assets/shared"   library="shared"   exclude="*.mp3" scale="0.5" />
         <assets path="assets/impostor" library="impostor" exclude="*.mp3" scale="0.5" />
     </section>
+
+	<set name="astc-block-size" value="6x6" />
+
+    <section if="mobile_compress">
+        <path name="tools" />
+        
+        <set name="lime-texture-compression" value="astc" />
+        <echo value="Building with ASTC Texture Compression enabled using local tools!" />
+    </section>
+
+    <section unless="mobile_compress">
+        <echo value="Building standard PNG version for quick testing." />
+    </section>
 	
 	<!-- <template path='mods' /> -->
 	
