@@ -57,7 +57,7 @@
 	<define name="VIDEOS_ALLOWED" unless="32"/>
 
 	<!-- <define name="PRELOAD_ALL" /> -->
-	<define name="PRELOAD_ALL" unless="web" />
+	<define name="PRELOAD_ALL" if="windows" />
 	<define name="NO_PRELOAD_ALL" unless="PRELOAD_ALL"/>
 	
 	<library name="videos"        preload="true" />
@@ -72,16 +72,22 @@
 		<library name="shared"        preload="false" />
 		<library name="impostor"      preload="false" />
 	</section>
+
+	<section if="windows">
+        <assets path="assets/songs"    library="songs"    exclude="*.mp3"/>
+        <assets path="assets/shared"   library="shared"   exclude="*.mp3"/>
+        <assets path="assets/impostor" library="impostor" exclude="*.mp3"/>
+    </section>
 	
 	<assets path="plugins/"             rename=''               if="VIDEOS_ALLOWED windows" />
 	<assets path="dlls/"                rename=''               if="VIDEOS_ALLOWED windows" />
 	<assets path="assets/videos"        library="videos"        if="VIDEOS_ALLOWED"/>
-	<assets path="assets/songs"         library="songs"         exclude="*.ogg" if="web"/>
-	<assets path="assets/songs"         library="songs"         exclude="*.mp3" unless="web"/>
-	<assets path="assets/shared"        library="shared"        exclude="*.ogg" if="web"/>
-	<assets path="assets/shared"        library="shared"        exclude="*.mp3" unless="web"/>
-	<assets path="assets/impostor"      library="impostor"      exclude="*.ogg" if="web"/>
-	<assets path="assets/impostor"      library="impostor"      exclude="*.mp3" unless="web"/>
+
+	<section if="mobile">
+        <assets path="assets/songs"    library="songs"    exclude="*.mp3" />
+        <assets path="assets/shared"   library="shared"   exclude="*.mp3" scale="0.5" />
+        <assets path="assets/impostor" library="impostor" exclude="*.mp3" scale="0.5" />
+    </section>
 	
 	<!-- <template path='mods' /> -->
 	

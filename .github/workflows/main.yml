@@ -2,6 +2,8 @@ name: Build Psych Engine
 
 on: workflow_dispatch
 
+permissions: write-all
+
 jobs:
   Build:
     name: ${{ matrix.name }}
@@ -10,39 +12,60 @@ jobs:
         include:
           - name: Windows
             os: windows-2022
-            buildArgs: "windows -D officialBuild -final"
+            setupCommand: ./setup/windows.bat
+            buildArgs: "windows -D officialBuild -final -release"
             artifactName: windowsBuild
             artifactPath: export/release/windows/bin/*
-            setupCommand: ./setup/windows.bat
             system: Windows
+            doCache: "YES"
+          - name: MacOS
+            os: macos-15
+            buildArgs: "macos -D officialBuild -final -release" 
+            setupCommand: sh ./setup/unix.sh
+            artifactName: macosBuild
+            artifactPath: export/release/macos/bin/*
+            system: MacOS
+            doCache: "YES"
+          - name: Linux
+            os: ubuntu-22.04
+            buildArgs: "linux -D officialBuild -final -release" 
+            setupCommand: sh ./setup/unix.sh
+            artifactName: linuxBuild
+            artifactPath: export/release/linux/bin/*
+            system: Linux
+            doCache: "YES"
           - name: Android-Arm64
-            os: ubuntu-24.04
-            buildArgs: "android -D officialBuild -ONLY_ARM64 -final" 
+            os: ubuntu-22.04
+            buildArgs: "android -D officialBuild -ONLY_ARM64 -final -release" 
             setupCommand: sh ./setup/unix.sh
             artifactName: androidBuild-Arm64
             artifactPath: "export/release/android/bin/app/build/outputs/apk/release/*.apk"
             system: Android
+            doCache: "NO"
           - name: Android-Armv7
-            os: ubuntu-24.04
-            buildArgs: "android -D officialBuild -ONLY_ARMV7 -final"
+            os: ubuntu-22.04
+            buildArgs: "android -D officialBuild -ONLY_ARMV7 -final -release"
             setupCommand: sh ./setup/unix.sh
             artifactName: androidBuild-Armv7
             artifactPath: "export/release/android/bin/app/build/outputs/apk/release/*.apk"
+            doCache: "NO"
             system: Android
           - name: Android-Both
-            os: ubuntu-24.04
-            buildArgs: "android -D officialBuild -final" 
+            os: ubuntu-22.04
+            buildArgs: "android -D officialBuild -final -release" 
             setupCommand: sh ./setup/unix.sh
             artifactName: androidBuild-Both
             artifactPath: "export/release/android/bin/app/build/outputs/apk/release/*.apk"
             system: Android
+            doCache: "YES"
           - name: iOS
             os: macos-15
             setupCommand: sh ./setup/unix.sh
-            buildArgs: "ios -final -nosign -D officialBuild"
+            buildArgs: "ios -final -release -nosign -D officialBuild"
             artifactName: iOSBuild
             artifactPath: "export/release/ios/build/Release-iphoneos/*.ipa"
             system: iOS
+            doCache: "YES"
     uses: ./.github/workflows/build.yml
     with:
         name: ${{ matrix.name }}
@@ -52,3 +75,4 @@ jobs:
         artifactName: ${{ matrix.artifactName }}
         artifactPath: ${{ matrix.artifactPath }}
         system: ${{ matrix.system }}
+        doCache: ${{ matrix.doCache }}

@@ -92,7 +92,7 @@ class Main extends Sprite
 		#end
 
 		// Paths.getModFolders();
-		addChild(new FlxGame(gameWidth, gameHeight, #if mobile CopyState.checkExistingFiles() ?  CopyState : #end initialState, #if (flixel < "5.0.0") zoom, #end framerate, framerate, skipSplash, startFullscreen));
+		addChild(new FlxGame(gameWidth, gameHeight, #if mobile !CopyState.checkExistingFiles() ? CopyState : #end initialState, #if (flixel < "5.0.0") zoom, #end framerate, framerate, skipSplash, startFullscreen));
 		FlxGraphic.defaultPersist = false;
 
 		FlxG.signals.gameResized.add(onResizeGame);
