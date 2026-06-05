@@ -1,5 +1,6 @@
 package;
 
+import flixel.util.FlxAxes;
 import extensions.FixedFlxBGSprite;
 import Achievements;
 import DialogueBoxPsych;
