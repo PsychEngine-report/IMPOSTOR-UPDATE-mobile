@@ -7,6 +7,7 @@ echo Makking the main haxelib and setuping folder in same time..
 haxelib setup ~/haxelib
 echo Installing dependencies...
 echo This might take a few moments depending on your internet speed.
+haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc --quiet
 haxelib git linc_luajit https://github.com/kittycathy233/linc_luajit --quiet
 haxelib install tjson --quiet
 haxelib install flixel 5.2.2 --quiet

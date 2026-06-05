@@ -1,8 +1,10 @@
 #include <mutex>
 #include <iostream>
 #include <string>
-#include <StdInt.h>
-#include <windows.h> 
+#include <stdint.h>
+#ifdef _WIN32
+#include <windows.h>
+#endif
 
 using std::string;
 using namespace std;
