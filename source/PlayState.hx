@@ -91,7 +91,7 @@ class PlayState extends MusicBeatState
 	public static var instance:PlayState;
 
 	public var variables:Map<String, Dynamic> = new Map();
-	public var modchartTexts:Map<String, ModchartText> = new Map<String, ModchartText>();
+	public var modchartTexts:Map<String, flixel.text.FlxText> = new Map<String, flixel.text.FlxText>();
 
 	var noteRows:Array<Array<Array<Note>>> = [[],[]];
 	var votingnoteRows:Array<Array<Array<Note>>> = [[],[]];
