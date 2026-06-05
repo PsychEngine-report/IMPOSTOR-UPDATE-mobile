@@ -26,14 +26,14 @@ jobs:
             artifactPath: export/release/macos/bin/*
             system: MacOS
             doCache: "YES"
-          - name: Linux
-            os: ubuntu-22.04
-            buildArgs: "linux -D officialBuild -final -release" 
-            setupCommand: sh ./setup/unix.sh
-            artifactName: linuxBuild
-            artifactPath: export/release/linux/bin/*
-            system: Linux
-            doCache: "YES"
+         # - name: Linux
+         #  os: ubuntu-22.04
+         #  buildArgs: "linux -D officialBuild -final -release" 
+         #  setupCommand: sh ./setup/unix.sh
+         #  artifactName: linuxBuild
+         #  artifactPath: export/release/linux/bin/*
+         #  system: Linux
+         #  doCache: "YES"
           - name: Android-Arm64
             os: ubuntu-22.04
             buildArgs: "android -D officialBuild -ONLY_ARM64 -final -release" 

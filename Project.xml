@@ -85,17 +85,31 @@
 
 	<section if="mobile">
         <assets path="assets/songs"    library="songs"    exclude="*.mp3" />
-        <assets path="assets/shared"   library="shared"   exclude="*.mp3" scale="0.5" />
-        <assets path="assets/impostor" library="impostor" exclude="*.mp3" scale="0.5" />
+        <assets path="assets/shared"   library="shared"   exclude="*.mp3" />
+        <assets path="assets/impostor" library="impostor" exclude="*.mp3" />
     </section>
 
 	<set name="astc-block-size" value="6x6" />
 
     <section if="mobile_compress">
-        <path name="tools" />
+        <section if="android">
+            <path name="tools" if="windows" />
+            
+            <section if="linux || host_linux || host-linux">
+                <path name="tools" />
+                <set name="astcenc-binary" value="astcenc-linux" /> 
+            </section>
+        </section>
+
+        <section if="ios">
+            <section if="mac || host_mac || host-mac">
+                <path name="tools" />
+                <set name="astcenc-binary" value="astcenc-mac" /> 
+            </section>
+        </section>
         
         <set name="lime-texture-compression" value="astc" />
-        <echo value="Building with ASTC Texture Compression enabled using local tools!" />
+        <echo value="Building with ASTC Texture Compression enabled!" />
     </section>
 
     <section unless="mobile_compress">
