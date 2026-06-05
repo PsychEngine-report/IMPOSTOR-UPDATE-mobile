@@ -27,7 +27,7 @@ on:
 
 env:
   HAXE_VERSION: 4.2.5
-  PROJECT_NAME: SillySingles
+  PROJECT_NAME: VSImpostor
 
 jobs:
   build:
