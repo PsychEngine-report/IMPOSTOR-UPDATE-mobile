@@ -54,7 +54,7 @@
 	<define name="TOUCH_CONTROLS" />
 	<define name="LUAMPAD_ALLOWED" />
 	<define name="CRASH_HANDLER" />
-	<define name="VIDEOS_ALLOWED" unless="32 linux macos" />
+	<define name="VIDEOS_ALLOWED" unless="32 || linux || macos" />
 
 	<!-- <define name="PRELOAD_ALL" /> -->
 	<define name="PRELOAD_ALL" if="windows" />
