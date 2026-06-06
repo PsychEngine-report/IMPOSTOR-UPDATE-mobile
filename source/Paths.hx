@@ -372,7 +372,7 @@ class Paths
         
         #if USING_GPU_TEXTURES
         var astcPath = path.replace('.png', '.astc');
-        if (.exists(astcPath)) {
+        if (FunkinFileSystem.exists(astcPath)) {
             if(!currentTrackedAssets.exists(astcPath)) {
                 final newGraphic = FlxGraphic.fromAssetKey(astcPath, true, key, false);
                 newGraphic.persist = true;
@@ -384,7 +384,7 @@ class Paths
         }
         #end
 
-        if (.exists(path)) {
+        if (FunkinFileSystem.exists(path)) {
             if(!currentTrackedAssets.exists(path)) 
             {
                 var bitmap = BitmapData.fromFile(path);
@@ -405,7 +405,7 @@ class Paths
 	public static function returnSound(path:String, key:String, ?library:String) {
 		#if MODS_ALLOWED
 		var file:String = modsSounds(path, key);
-		if(.exists(file)) {
+		if(FunkinFileSystem.exists(file)) {
 			if(!currentTrackedSounds.exists(file)) {
 				currentTrackedSounds.set(file, Sound.fromFile(file));
 			}
@@ -475,7 +475,7 @@ class Paths
 	static public function modFolders(key:String) {
 		if(currentModDirectory != null && currentModDirectory.length > 0) {
 			var fileToCheck:String = mods(currentModDirectory + '/' + key);
-			if(.exists(fileToCheck)) {
+			if(FunkinFileSystem.exists(fileToCheck)) {
 				return fileToCheck;
 			}
 		}
@@ -484,10 +484,10 @@ class Paths
 	static public function getModDirectories():Array<String> {
 		var list:Array<String> = [];
 		var modsFolder:String = mods();
-		if(.exists(modsFolder)) {
-			for (folder in .readDirectory(modsFolder)) {
+		if(FunkinFileSystem.exists(modsFolder)) {
+			for (folder in FunkinFileSystem.readDirectory(modsFolder)) {
 				var path = haxe.io.Path.join([modsFolder, folder]);
-				if (sys..isDirectory(path) && !ignoreModFolders.contains(folder) && !list.contains(folder)) {
+				if (FunkinFileSystem.isDirectory(path) && !ignoreModFolders.contains(folder) && !list.contains(folder)) {
 					list.push(folder);
 				}
 			}
@@ -498,7 +498,7 @@ class Paths
 	public static function readDirectory(directory:String):Array<String>
 	{
 		#if MODS_ALLOWED
-		return .readDirectory(directory);
+		return FunkinFileSystem.readDirectory(directory);
 		#else
 		var dirs:Array<String> = [];
 		for(dir in Assets.list().filter(folder -> folder.startsWith(directory)))
