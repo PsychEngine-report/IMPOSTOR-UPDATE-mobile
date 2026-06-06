@@ -45,8 +45,8 @@
 		<assets path="mobile"         rename="assets/mobile"        exclude="*.mp3" unless="web"/>
 	</section>
 
-	<assets path="assets/preload" rename="assets" exclude="*.ogg" if="web"/>
-	<assets path="assets/preload" rename="assets" exclude="*.mp3"  unless="web"/>
+	<assets path="assets/preload" rename="assets" exclude="*.ogg|images-png|images-astc" if="web"/>
+    <assets path="assets/preload" rename="assets" exclude="*.mp3|images-png|images-astc" unless="web"/>
 	
 	<!-- PSYCH ENGINE CUSTOMIZATION -->
 	<define name="MODS_ALLOWED" />
@@ -76,9 +76,9 @@
 	<section if="windows">
         <assets path="assets/songs"    library="songs"    exclude="*.mp3"/>
         
-        <assets path="assets/preload/images-png"  rename="assets/images"          exclude="*.astc" />
-        <assets path="assets/shared/images-png"   rename="assets/shared/images"   library="shared"   exclude="*.mp3|*.astc" />
-        <assets path="assets/impostor/images-png" rename="assets/impostor/images" library="impostor" exclude="*.mp3|*.astc" />
+        <assets path="assets/preload/images-png"  rename="assets/images" exclude="*.mp3|images-png|images-astc" />
+        <assets path="assets/shared/images-png"   rename="assets/shared/images"   library="shared"   exclude="*.mp3|images-png|images-astc" />
+        <assets path="assets/impostor/images-png" rename="assets/impostor/images" library="impostor" exclude="*.mp3|images-png|images-astc" />
     </section>
 	
 	<assets path="plugins/"             rename=''               if="VIDEOS_ALLOWED windows" />
@@ -87,21 +87,12 @@
 
 	<section if="mobile">
         <assets path="assets/songs"    library="songs"    exclude="*.mp3" />
-        <assets path="assets/shared"   library="shared"   exclude="*.mp3" />
-        <assets path="assets/impostor" library="impostor" exclude="*.mp3" />
-    </section>
-
-   
-
-
-	<section if="mobile">
-        <haxedef name="USING_GPU_TEXTURES" />
-
-        <assets path="assets/songs"    library="songs"    exclude="*.mp3" />
-        
-        <assets path="assets/preload/images-png"  rename="assets/images"          exclude="*.png" />
-        <assets path="assets/shared/images-png"   rename="assets/shared/images"   library="shared"   exclude="*.mp3|*.png" />
-        <assets path="assets/impostor/images-png" rename="assets/impostor/images" library="impostor" exclude="*.mp3|*.png" />
+        <assets path="assets/shared"   library="shared"   exclude="*.mp3|images-png|images-astc" />
+        <assets path="assets/impostor" library="impostor" exclude="*.mp3|images-png|images-astc" />
+		<haxedef name="USING_GPU_TEXTURES" />
+        <assets path="assets/preload/images-astc"  rename="assets/images" />
+        <assets path="assets/shared/images-astc"   rename="assets/shared/images"   library="shared"   exclude="*.mp3" />
+        <assets path="assets/impostor/images-astc" rename="assets/impostor/images" library="impostor" exclude="*.mp3" />
     </section>
 	
 	<!-- <template path='mods' /> -->

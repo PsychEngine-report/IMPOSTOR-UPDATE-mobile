@@ -20,6 +20,8 @@ import mobile.options.*;
 import mobile.backend.MobileScaleMode;
 #end
 
+import funk.FunkinFileSystem;
+
 #if sys
 import sys.*;
 import sys.io.*;

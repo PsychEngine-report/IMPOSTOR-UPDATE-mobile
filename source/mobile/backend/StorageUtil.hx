@@ -22,7 +22,7 @@ class StorageUtil
 	{
 		var daPath:String = '';
 		#if android
-		if (!FileSystem.exists(rootDir + 'storagetype.txt'))
+		if (!FunkinFileSystem.exists(rootDir + 'storagetype.txt'))
 			File.saveContent(rootDir + 'storagetype.txt', ClientPrefs.storageType);
 		var curStorageType:String = File.getContent(rootDir + 'storagetype.txt');
 		daPath = force ? StorageType.fromStrForce(curStorageType) : StorageType.fromStr(curStorageType);
@@ -40,7 +40,7 @@ class StorageUtil
 	{
 		try
 		{
-			if (FileSystem.exists(directory) && FileSystem.isDirectory(directory))
+			if (FunkinFileSystem.exists(directory) && FileSystem.isDirectory(directory))
 				return;
 		}
 		catch (e:haxe.Exception)
@@ -67,7 +67,7 @@ class StorageUtil
 
 				try
 				{
-					if (!FileSystem.exists(total))
+					if (!FunkinFileSystem.exists(total))
 						FileSystem.createDirectory(total);
 				}
 				catch (e:Exception)
@@ -81,7 +81,7 @@ class StorageUtil
 	{
 		try
 		{
-			if (!FileSystem.exists('saves'))
+			if (!FunkinFileSystem.exists('saves'))
 				FileSystem.createDirectory('saves');
 
 			File.saveContent('saves/$fileName', fileData);
@@ -120,7 +120,7 @@ class StorageUtil
 
 		try
 		{
-			if (!FileSystem.exists(StorageUtil.getStorageDirectory()))
+			if (!FunkinFileSystem.exists(StorageUtil.getStorageDirectory()))
 				createDirectories(StorageUtil.getStorageDirectory());
 		}
 		catch (e:Dynamic)

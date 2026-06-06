@@ -80,8 +80,8 @@ class WeekData {
 		#if MODS_ALLOWED
 		var directories:Array<String> = [Paths.mods(), Paths.getPreloadPath()];
 		var originalLength:Int = directories.length;
-		if(FileSystem.exists(Paths.mods())) {
-			for (folder in FileSystem.readDirectory(Paths.mods())) {
+		if(FunkinFileSystem.exists(Paths.mods())) {
+			for (folder in FunkinFileSystem.readDirectory(Paths.mods())) {
 				var path = haxe.io.Path.join([Paths.mods(), folder]);
 				if (sys.FileSystem.isDirectory(path) && !Paths.ignoreModFolders.contains(folder)) {
 					directories.push(path + '/');
@@ -122,8 +122,8 @@ class WeekData {
 		#if MODS_ALLOWED
 		for (i in 0...directories.length) {
 			var directory:String = directories[i] + 'weeks/';
-			if(FileSystem.exists(directory)) {
-				for (file in FileSystem.readDirectory(directory)) {
+			if(FunkinFileSystem.exists(directory)) {
+				for (file in FunkinFileSystem.readDirectory(directory)) {
 					var path = haxe.io.Path.join([directory, file]);
 					if (!sys.FileSystem.isDirectory(path) && file.endsWith('.json')) {
 						var weekToCheck:String = file.substr(0, file.length - 5);
@@ -151,7 +151,7 @@ class WeekData {
 	private static function getWeekFile(path:String):WeekFile {
 		var rawJson:String = null;
 		#if MODS_ALLOWED
-		if(FileSystem.exists(path)) {
+		if(FunkinFileSystem.exists(path)) {
 			rawJson = File.getContent(path);
 		}
 		#else

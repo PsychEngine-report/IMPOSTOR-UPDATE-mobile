@@ -88,7 +88,7 @@ class MobilePad extends FlxTypedSpriteGroup<MobileButton> {
 		final path:String = 'assets/mobile/MobileButton/VirtualPad/original/$Frames.png';
 		#if MODS_ALLOWED
 		final modsPath:String = Paths.modFolders('mobile/MobileButton/VirtualPad/original/$Frames');
-		if(sys.FileSystem.exists(modsPath))
+		if(FunkinFileSystem.exists(modsPath))
 			frames = FlxGraphic.fromBitmapData(BitmapData.fromFile(modsPath));
 		else #end if(Assets.exists(path))
 			frames = FlxGraphic.fromBitmapData(Assets.getBitmapData(path));

@@ -67,9 +67,9 @@ class TitleState extends MusicBeatState
 	override public function create():Void
 	{
 		#if (polymod && !html5)
-		if (sys.FileSystem.exists('mods/')) {
+		if (FunkinFileSystem.exists('mods/')) {
 			var folders:Array<String> = [];
-			for (file in sys.FileSystem.readDirectory('mods/')) {
+			for (file in FunkinFileSystem.readDirectory('mods/')) {
 				var path = haxe.io.Path.join(['mods/', file]);
 				if (sys.FileSystem.isDirectory(path)) {
 					folders.push(file);
@@ -524,7 +524,7 @@ class TitleState extends MusicBeatState
 	var foundFile:Bool = false;
 	var fileName:String = #if MODS_ALLOWED Paths.modFolders('videos/' + name + '.' + Paths.VIDEO_EXT); #else ''; #end
 	#if sys
-	if (FileSystem.exists(fileName))
+	if (FunkinFileSystem.exists(fileName))
 	{
 		foundFile = true;
 	}
@@ -534,7 +534,7 @@ class TitleState extends MusicBeatState
 	{
 		fileName = Paths.video(name);
 		#if sys
-		if (FileSystem.exists(fileName))
+		if (FunkinFileSystem.exists(fileName))
 		{
 		#else
 		if (OpenFlAssets.exists(fileName))

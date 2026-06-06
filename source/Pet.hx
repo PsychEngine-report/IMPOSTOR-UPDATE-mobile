@@ -83,11 +83,11 @@ class Pet extends FlxSprite
 				var petPath:String = 'pets/' + curPet + '.json';
 				#if MODS_ALLOWED
 				var path:String = Paths.modFolders(petPath);
-				if (!FileSystem.exists(path)) {
+				if (!FunkinFileSystem.exists(path)) {
 					path = Paths.getPreloadPath(petPath);
 				}
 
-				if (!FileSystem.exists(path))
+				if (!FunkinFileSystem.exists(path))
 				#else
 				var path:String = Paths.getPreloadPath(petPath);
 				if (!Assets.exists(path))

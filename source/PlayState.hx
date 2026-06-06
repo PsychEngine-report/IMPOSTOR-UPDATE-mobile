@@ -3629,7 +3629,7 @@ class PlayState extends MusicBeatState
 		#if (MODS_ALLOWED && LUA_ALLOWED)
 		var doPush:Bool = false;
 		var luaFile:String = 'stages/' + curStage + '.lua';
-		if (FileSystem.exists(Paths.modFolders(luaFile)))
+		if (FunkinFileSystem.exists(Paths.modFolders(luaFile)))
 		{
 			luaFile = Paths.modFolders(luaFile);
 			doPush = true;
@@ -3637,7 +3637,7 @@ class PlayState extends MusicBeatState
 		else
 		{
 			luaFile = Paths.getPreloadPath(luaFile);
-			if (FileSystem.exists(luaFile))
+			if (FunkinFileSystem.exists(luaFile))
 			{
 				doPush = true;
 			}
@@ -3978,7 +3978,7 @@ class PlayState extends MusicBeatState
 		for (notetype in noteTypeMap.keys())
 		{
 			var luaToLoad:String = Paths.modFolders('custom_notetypes/' + notetype + '.lua');
-			if (FileSystem.exists(luaToLoad))
+			if (FunkinFileSystem.exists(luaToLoad))
 			{
 				luaArray.push(new FunkinLua(luaToLoad));
 			}
@@ -3986,7 +3986,7 @@ class PlayState extends MusicBeatState
 		for (event in eventPushedMap.keys())
 		{
 			var luaToLoad:String = Paths.modFolders('custom_events/' + event + '.lua');
-			if (FileSystem.exists(luaToLoad))
+			if (FunkinFileSystem.exists(luaToLoad))
 			{
 				luaArray.push(new FunkinLua(luaToLoad));
 			}
@@ -4265,7 +4265,7 @@ class PlayState extends MusicBeatState
 		#if (MODS_ALLOWED && LUA_ALLOWED)
 		var doPush:Bool = false;
 		var luaFile:String = 'data/' + Paths.formatToSongPath(SONG.song) + '/script.lua';
-		if (FileSystem.exists(Paths.modFolders(luaFile)))
+		if (FunkinFileSystem.exists(Paths.modFolders(luaFile)))
 		{
 			luaFile = Paths.modFolders(luaFile);
 			doPush = true;
@@ -4273,7 +4273,7 @@ class PlayState extends MusicBeatState
 		else
 		{
 			luaFile = Paths.getPreloadPath(luaFile);
-			if (FileSystem.exists(luaFile))
+			if (FunkinFileSystem.exists(luaFile))
 			{
 				doPush = true;
 			}
@@ -4710,7 +4710,7 @@ class PlayState extends MusicBeatState
 	var foundFile:Bool = false;
 	var fileName:String = #if MODS_ALLOWED Paths.modFolders('videos/' + name + '.' + Paths.VIDEO_EXT); #else ''; #end
 	#if sys
-	if (FileSystem.exists(fileName))
+	if (FunkinFileSystem.exists(fileName))
 	{
 		foundFile = true;
 	}
@@ -4720,7 +4720,7 @@ class PlayState extends MusicBeatState
 	{
 		fileName = Paths.video(name);
 		#if sys
-		if (FileSystem.exists(fileName))
+		if (FunkinFileSystem.exists(fileName))
 		{
 		#else
 		if (OpenFlAssets.exists(fileName))
@@ -5331,7 +5331,7 @@ class PlayState extends MusicBeatState
 		var songName:String = Paths.formatToSongPath(SONG.song);
         var file:String = Paths.json(songName + '/events');
         #if sys
-        if (FileSystem.exists(Paths.modFolders('data/' + songName + '/events.json')) || FileSystem.exists(file))
+        if (FunkinFileSystem.exists(Paths.modFolders('data/' + songName + '/events.json')) || FunkinFileSystem.exists(file))
         {
         #else
         if (OpenFlAssets.exists(file))

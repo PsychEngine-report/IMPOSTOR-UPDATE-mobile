@@ -20,6 +20,9 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
+
+ // this isn't used anymore because of FunkinFileSystem, but it's still here in case i need it for something else in the future
+/*
 package mobile.states;
 
 import TitleState;
@@ -34,7 +37,7 @@ import flixel.ui.FlxBar.FlxBarFillDirection;
 /**
  * ...
  * @author: Karim Akra
- */
+ *
 class CopyState extends MusicBeatState
 {
 	private static final textFilesExtensions:Array<String> = ['ini', 'txt', 'xml', 'hxs', 'hx', 'lua', 'json', 'frag', 'vert'];
@@ -239,4 +242,4 @@ class CopyState extends MusicBeatState
 
 		return (maxLoopTimes <= 0);
 	}
-}
+}*/
