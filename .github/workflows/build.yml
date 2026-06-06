@@ -74,9 +74,9 @@ jobs:
         if: startsWith(inputs.name, 'Linux')
         run: |
           sudo apt-get update
-          sudo apt-get install -y libvlc-dev libvlccore-dev vlc-plugin-base
+          sudo apt-get install -y libvlc-dev libvlccore-dev vlc-plugin-base pkg-config
 
-      - name: Install VLC on macOS Runner
+      - name: Install VLC on macOS
         if: inputs.system == 'MacOS'
         run: |
           brew install vlc
