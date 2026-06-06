@@ -1,4 +1,4 @@
-package source.funk;
+package funk;
 
 import lime.utils.Assets;
 import haxe.io.Path;
