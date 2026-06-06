@@ -169,9 +169,10 @@
 		<cxxflag name="-I/usr/include/vlc" />
 		<cxxflag name="-I/usr/include/vlc/plugins" />
 
-		<setenv name="HXCPP_VLC_LINK" value="-lvlc -lvlccore" />
-		<compilerflag name="-l:libvlc.so.5" />
-		<compilerflag name="-l:libvlccore.so.9" />
+		<target id="linux">
+			<lib name="-lvlc" />
+			<lib name="-lvlccore" />
+		</target>
 	</section>
 
 	<!-- _________________________________ Custom _______________________________ -->
