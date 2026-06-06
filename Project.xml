@@ -54,7 +54,7 @@
 	<define name="TOUCH_CONTROLS" />
 	<define name="LUAMPAD_ALLOWED" />
 	<define name="CRASH_HANDLER" />
-	<define name="VIDEOS_ALLOWED" unless="32"/>
+	<define name="VIDEOS_ALLOWED" unless="32 linux macos" />
 
 	<!-- <define name="PRELOAD_ALL" /> -->
 	<define name="PRELOAD_ALL" if="windows" />
@@ -164,16 +164,6 @@
 	<haxedef name="SHARE_MOBILE_FILES" if="mobile"/>
 	<!--  Do whatever you want I'm tired uninstall and install everytime  -->
 	<certificate path="key.keystore" password="psychengine" alias="psychport" alias-password="psychengine" if="android" unless="debug"/>
-
-	<section if="linux">
-		<cxxflag name="-I/usr/include/vlc" />
-		<cxxflag name="-I/usr/include/vlc/plugins" />
-
-		<target id="linux">
-			<lib name="-lvlc" />
-			<lib name="-lvlccore" />
-		</target>
-	</section>
 
 	<!-- _________________________________ Custom _______________________________ -->
 
