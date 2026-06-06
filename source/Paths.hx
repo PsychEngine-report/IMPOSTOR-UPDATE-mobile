@@ -16,6 +16,7 @@ import flixel.FlxSprite;
 #if MODS_ALLOWED
 import sys.io.File;
 import sys.FileSystem;
+import funk.FunkinFileSystem;
 #end
 import flixel.graphics.FlxGraphic;
 import openfl.display.BitmapData;
@@ -28,6 +29,10 @@ class Paths
 {
 	inline public static var SOUND_EXT = #if web "mp3" #else "ogg" #end;
 	inline public static var VIDEO_EXT = "mp4";
+
+	#if USING_GPU_TEXTURES
+    public static final GPU_IMAGE_EXTS:Array<String> = ['astc'];
+    #end
 
 	#if MODS_ALLOWED
 	public static var ignoreModFolders:Array<String> = [
@@ -138,7 +143,7 @@ class Paths
 			return levelPath;
 
 		levelPath = getLibraryPathForce(file, "shared");
-		if (FileSystem.exists(levelPath))
+		if (FunkinFileSystem.exists(levelPath))
 			return levelPath;
 
 		return getPreloadPath(file);
@@ -201,7 +206,7 @@ class Paths
 	{
 		#if MODS_ALLOWED
 		var file:String = modsVideo(key);
-		if(FileSystem.exists(file)) {
+		if(FunkinFileSystem.exists(file)) {
 			return file;
 		}
 		#end
@@ -249,11 +254,11 @@ class Paths
 	{
 		#if sys
 		#if MODS_ALLOWED
-		if (!ignoreMods && FileSystem.exists(modFolders(key)))
+		if (!ignoreMods && FunkinFileSystem.exists(modFolders(key)))
 			return File.getContent(modFolders(key));
 		#end
 
-		if (FileSystem.exists(getPreloadPath(key)))
+		if (FunkinFileSystem.exists(getPreloadPath(key)))
 			return File.getContent(getPreloadPath(key));
 
 		if (currentLevel != null)
@@ -261,12 +266,12 @@ class Paths
 			var levelPath:String = '';
 			if(currentLevel != 'shared') {
 				levelPath = getLibraryPathForce(key, currentLevel);
-				if (FileSystem.exists(levelPath))
+				if (FunkinFileSystem.exists(levelPath))
 					return File.getContent(levelPath);
 			}
 
 			levelPath = getLibraryPathForce(key, 'shared');
-			if (FileSystem.exists(levelPath))
+			if (FunkinFileSystem.exists(levelPath))
 				return File.getContent(levelPath);
 		}
 		#end
@@ -277,7 +282,7 @@ class Paths
 	{
 		#if MODS_ALLOWED
 		var file:String = modsFont(key);
-		if(FileSystem.exists(file)) {
+		if(FunkinFileSystem.exists(file)) {
 			return file;
 		}
 		#end
@@ -287,7 +292,7 @@ class Paths
 	inline static public function fileExists(key:String, type:AssetType, ?ignoreMods:Bool = false, ?library:String)
 	{
 		#if MODS_ALLOWED
-		if(FileSystem.exists(mods(currentModDirectory + '/' + key)) || FileSystem.exists(mods(key))) {
+		if(FunkinFileSystem.exists(mods(currentModDirectory + '/' + key)) || FunkinFileSystem.exists(mods(key))) {
 			return true;
 		}
 		#end
@@ -303,7 +308,7 @@ class Paths
 		#if MODS_ALLOWED
 		var imageLoaded:FlxGraphic = returnGraphic(key, library, true);
 		var xmlExists:Bool = false;
-		if(FileSystem.exists(modsXml(key))) {
+		if(FunkinFileSystem.exists(modsXml(key))) {
 			xmlExists = true;
 		}
 
@@ -319,7 +324,7 @@ class Paths
 		#if MODS_ALLOWED
 		var imageLoaded:FlxGraphic = returnGraphic(key);
 		var txtExists:Bool = false;
-		if(FileSystem.exists(modsTxt(key))) {
+		if(FunkinFileSystem.exists(modsTxt(key))) {
 			txtExists = true;
 		}
 
@@ -335,46 +340,72 @@ class Paths
 
 	// completely rewritten asset loading? fuck!
 	public static var currentTrackedAssets:Map<String, FlxGraphic> = [];
-	public static function returnGraphic(key:String, ?library:String, ?textureCompression:Bool = false) {
-		#if MODS_ALLOWED
-		var modKey:String = modsImages(key);
-		if(FileSystem.exists(modKey)) {
-			if(!currentTrackedAssets.exists(modKey)) {
-				var newBitmap:BitmapData = BitmapData.fromFile(modKey);
-				var newGraphic:FlxGraphic = FlxGraphic.fromBitmapData(newBitmap, false, modKey);
-				newGraphic.persist = true;
-				currentTrackedAssets.set(modKey, newGraphic);
-			}
-			localTrackedAssets.push(modKey);
-			return currentTrackedAssets.get(modKey);
-		}
-		#end
+    public static function returnGraphic(key:String, ?library:String, ?textureCompression:Bool = false) {
+        #if MODS_ALLOWED
+        var modKey:String = modsImages(key);
+        
+        #if USING_GPU_TEXTURES
+        var modAstcKey:String = modKey.replace('.png', '.astc');
+        if(FunkinFileSystem.exists(modAstcKey)) {
+            if(!currentTrackedAssets.exists(modAstcKey)) {
+                var newGraphic:FlxGraphic = FlxGraphic.fromAssetKey(modAstcKey, false, modAstcKey);
+                newGraphic.persist = true;
+                currentTrackedAssets.set(modAstcKey, newGraphic);
+            }
+            localTrackedAssets.push(modAstcKey);
+            return currentTrackedAssets.get(modAstcKey);
+        }
+        #end
 
-		var path = getPath('images/$key.png', IMAGE, library);
-		if (FileSystem.exists(path)) {
-			if(!currentTrackedAssets.exists(path)) 
-			{
+        if(FunkinFileSystem.exists(modKey)) {
+            if(!currentTrackedAssets.exists(modKey)) {
+                var newBitmap:BitmapData = BitmapData.fromFile(modKey);
+                var newGraphic:FlxGraphic = FlxGraphic.fromBitmapData(newBitmap, false, modKey);
+                newGraphic.persist = true;
+                currentTrackedAssets.set(modKey, newGraphic);
+            }
+            localTrackedAssets.push(modKey);
+            return currentTrackedAssets.get(modKey);
+        }
+        #end
+        var path = getPath('images/$key.png', IMAGE, library);
+        
+        #if USING_GPU_TEXTURES
+        var astcPath = path.replace('.png', '.astc');
+        if (.exists(astcPath)) {
+            if(!currentTrackedAssets.exists(astcPath)) {
+                final newGraphic = FlxGraphic.fromAssetKey(astcPath, true, key, false);
+                newGraphic.persist = true;
+                newGraphic.destroyOnNoUse = false;
+                currentTrackedAssets.set(astcPath, newGraphic);
+            }
+            localTrackedAssets.push(astcPath);
+            return currentTrackedAssets.get(astcPath);
+        }
+        #end
 
-				// path = path.substring(path.indexOf(':') + 1, path.length);
-				var bitmap = BitmapData.fromFile(path);
-				final newGraphic = FlxGraphic.fromBitmapData(bitmap, true, key, false);
+        if (.exists(path)) {
+            if(!currentTrackedAssets.exists(path)) 
+            {
+                var bitmap = BitmapData.fromFile(path);
+                final newGraphic = FlxGraphic.fromBitmapData(bitmap, true, key, false);
 
-				newGraphic.persist = true;
-				newGraphic.destroyOnNoUse = false;
-				currentTrackedAssets.set(path, newGraphic);
-			}
-			localTrackedAssets.push(path);
-			return currentTrackedAssets.get(path);
-		}
-		trace('oh no $path is returning null NOOOO');
-		return null;
-	}
+                newGraphic.persist = true;
+                newGraphic.destroyOnNoUse = false;
+                currentTrackedAssets.set(path, newGraphic);
+            }
+            localTrackedAssets.push(path);
+            return currentTrackedAssets.get(path);
+        }
+        trace('oh no $path is returning null NOOOO');
+        return null;
+    }
 
 	public static var currentTrackedSounds:Map<String, Sound> = [];
 	public static function returnSound(path:String, key:String, ?library:String) {
 		#if MODS_ALLOWED
 		var file:String = modsSounds(path, key);
-		if(FileSystem.exists(file)) {
+		if(.exists(file)) {
 			if(!currentTrackedSounds.exists(file)) {
 				currentTrackedSounds.set(file, Sound.fromFile(file));
 			}
@@ -444,7 +475,7 @@ class Paths
 	static public function modFolders(key:String) {
 		if(currentModDirectory != null && currentModDirectory.length > 0) {
 			var fileToCheck:String = mods(currentModDirectory + '/' + key);
-			if(FileSystem.exists(fileToCheck)) {
+			if(.exists(fileToCheck)) {
 				return fileToCheck;
 			}
 		}
@@ -453,10 +484,10 @@ class Paths
 	static public function getModDirectories():Array<String> {
 		var list:Array<String> = [];
 		var modsFolder:String = mods();
-		if(FileSystem.exists(modsFolder)) {
-			for (folder in FileSystem.readDirectory(modsFolder)) {
+		if(.exists(modsFolder)) {
+			for (folder in .readDirectory(modsFolder)) {
 				var path = haxe.io.Path.join([modsFolder, folder]);
-				if (sys.FileSystem.isDirectory(path) && !ignoreModFolders.contains(folder) && !list.contains(folder)) {
+				if (sys..isDirectory(path) && !ignoreModFolders.contains(folder) && !list.contains(folder)) {
 					list.push(folder);
 				}
 			}
@@ -467,7 +498,7 @@ class Paths
 	public static function readDirectory(directory:String):Array<String>
 	{
 		#if MODS_ALLOWED
-		return FileSystem.readDirectory(directory);
+		return .readDirectory(directory);
 		#else
 		var dirs:Array<String> = [];
 		for(dir in Assets.list().filter(folder -> folder.startsWith(directory)))

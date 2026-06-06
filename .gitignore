@@ -2,12 +2,5 @@ export/
 .vscode/
 APIStuff.hx
 .haxelib/
-
+tools/
 .haxelib
-
-# OpenFL / Lime cache
-export/
-obj/
-*.pkm
-*.astc
-.lime/
