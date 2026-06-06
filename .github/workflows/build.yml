@@ -76,6 +76,11 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y libvlc-dev libvlccore-dev vlc-plugin-base
 
+      - name: Install VLC on macOS Runner
+        if: inputs.system == 'MacOS'
+        run: |
+          brew install vlc
+
       - name: Restore cache for android builds
         if: endsWith(inputs.doCache, 'YES')
         uses: actions/cache@v4
