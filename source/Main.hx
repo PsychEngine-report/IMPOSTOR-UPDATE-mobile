@@ -39,6 +39,7 @@ class Main extends Sprite
 	{
 		super();
 		#if mobile
+		MobileData.init();
 		#if android
 		StorageUtil.requestPermissions();
 		#end

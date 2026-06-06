@@ -66,6 +66,10 @@ class TitleState extends MusicBeatState
 
 	override public function create():Void
 	{
+		#if mobile
+		MobileData.init();
+		#end
+		
 		#if (polymod && !html5)
 		if (FunkinFileSystem.exists('mods/')) {
 			var folders:Array<String> = [];
