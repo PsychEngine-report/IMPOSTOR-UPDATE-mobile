@@ -73,7 +73,7 @@
 		<library name="impostor"      preload="false" />
 	</section>
 
-	<section if="windows">
+	<section if="desktop">
         <assets path="assets/songs"    library="songs"    exclude="*.mp3"/>
         
         <assets path="assets/preload/images-png"  rename="assets/images" exclude="*.mp3|images-png|images-astc" />
@@ -164,6 +164,12 @@
 	<haxedef name="SHARE_MOBILE_FILES" if="mobile"/>
 	<!--  Do whatever you want I'm tired uninstall and install everytime  -->
 	<certificate path="key.keystore" password="psychengine" alias="psychport" alias-password="psychengine" if="android" unless="debug"/>
+
+	<section if="linux">
+    <compilerflag value="-I/usr/include/vlc" />
+    <compilerflag value="-I/usr/include/vlc/plugins" />
+    <compilerflag value="`pkg-config --cflags --libs libvlc`" />
+	</section>
 
 	<!-- _________________________________ Custom _______________________________ -->
 
