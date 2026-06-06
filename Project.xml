@@ -166,9 +166,13 @@
 	<certificate path="key.keystore" password="psychengine" alias="psychport" alias-password="psychengine" if="android" unless="debug"/>
 
 	<section if="linux">
-		<compilerflag name="-I/usr/include/vlc" />
-		<compilerflag name="-I/usr/include/vlc/plugins" />
-		<compilerflag name="`pkg-config --cflags --libs libvlc`" />
+		<cxxflag name="-I/usr/include/vlc" />
+		<cxxflag name="-I/usr/include/vlc/plugins" />
+		
+		<target id="linux" if="linux">
+			<flag name="-lvlc" />
+			<flag name="-lvlccore" />
+		</target>
 	</section>
 
 	<!-- _________________________________ Custom _______________________________ -->
