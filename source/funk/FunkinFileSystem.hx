@@ -1,7 +1,5 @@
 package source.funk;
 
-package backend;
-
 import lime.utils.Assets;
 import haxe.io.Path;
 
